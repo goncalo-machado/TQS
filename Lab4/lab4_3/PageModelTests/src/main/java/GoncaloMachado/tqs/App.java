@@ -1,4 +1,4 @@
-package PedroLopes.tqs;
+package GoncaloMachado.tqs;
 
 /**
  * Hello world!

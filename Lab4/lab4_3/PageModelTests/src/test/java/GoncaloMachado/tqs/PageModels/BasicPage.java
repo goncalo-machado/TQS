@@ -1,4 +1,4 @@
-package PedroLopes.tqs.PageModels;
+package GoncaloMachado.tqs.PageModels;
 
 
 import org.openqa.selenium.By;

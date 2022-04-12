@@ -1,14 +1,12 @@
-package PedroLopes.tqs;
+package GoncaloMachado.tqs;
 
 
-import PedroLopes.tqs.PageModels.FinalPage;
-import PedroLopes.tqs.PageModels.InformationForm;
-import PedroLopes.tqs.PageModels.PickFlightFromList;
-import PedroLopes.tqs.PageModels.TravelPointPick;
+import GoncaloMachado.tqs.PageModels.InformationForm;
+import GoncaloMachado.tqs.PageModels.PickFlightFromList;
+import GoncaloMachado.tqs.PageModels.TravelPointPick;
 import io.github.bonigarcia.seljup.SeleniumJupiter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.WebDriver;
 import io.github.bonigarcia.seljup.Arguments;
 
@@ -37,18 +35,17 @@ public class AppChromeDockerTest {
     PickFlightFromList p = new PickFlightFromList( driver );
     assertThat( p.getDepartCountry() ).contains( "Philadelphia" );
     assertThat( p.getArrivesCountry() ).contains( "London" );
-    String price = p.getFlightPrice();
     p.chooseFlight();
 
     InformationForm i = new InformationForm( driver, 10 );
 
-    i.fillInputName( "Pedro" );
+    i.fillInputName( "Goncalo" );
     try {
       TimeUnit.SECONDS.sleep( 1l );
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    assertThat( i.getText( i.getInputName() ) ).isEqualTo( "Pedro" );
+    assertThat( i.getText( i.getInputName() ) ).isEqualTo( "Goncalo");
     i.fillAddress( "asdfasdfas" );
     assertThat( i.getText( i.getAddress() ) ).isEqualTo( "asdfasdfas" );
     i.fillCity( "Europe" );
