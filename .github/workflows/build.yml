@@ -5,10 +5,12 @@ on:
       - master
   pull_request:
     types: [opened, synchronize, reopened]
+defaults:
+    run:
+      working-directory: HW1/covid_tracker
 jobs:
   build:
     name: Build
-    working-directory: HW1/covid_tracker
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
