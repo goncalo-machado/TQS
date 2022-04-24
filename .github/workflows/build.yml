@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     name: Build
+    working-directory: HW1/covid_tracker
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
