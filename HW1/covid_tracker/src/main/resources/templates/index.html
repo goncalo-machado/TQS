@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Covid Tracker</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-red.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<div class="w3-container">
+    <div class="w3-bar w3-theme">
+        <a th:href="@{/}" class="w3-bar-item w3-button w3-padding-16">Index</a>
+        <a th:href="@{/cache}" class="w3-bar-item w3-button w3-padding-16">Cache</a>
+    </div>
+</div>
+
+<div class="w3-container">
+<form class="w3-container w3-card-4 w3-light-grey" action="#" th:action="@{/countryStats}" th:object="${countryDayOfData}" method="POST">
+    <p><label>Search country by name, ISO2 or ISO3 (For world stats, type "World")</label>
+    <input class="w3-input w3-border" name="country" type="text" field="*{country}"></p>
+
+    <p>Date of Data</p>
+    <input class="w3-radio" type="radio" name="dayOfData" value="0" field="*{dayOfData}" checked>
+    <label>Today</label>
+
+    <input class="w3-radio" type="radio" name="dayOfData" value="1" field="*{dayOfData}">
+    <label>Yesterday</label>
+
+    <input class="w3-radio" type="radio" name="dayOfData" value="2" field="*{dayOfData}">
+    <label>Two Days Ago</label>
+
+    <br>
+    <br>
+
+    <button type="submit" class="w3-button w3-theme">Submit</a>
+</form>
+</div>
+
+
+</body>
+</html>
