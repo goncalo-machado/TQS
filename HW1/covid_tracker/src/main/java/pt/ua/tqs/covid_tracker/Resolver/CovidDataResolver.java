@@ -53,18 +53,18 @@ public class CovidDataResolver {
     public CovidData getCountryData(String country, int date){ 
         String response = null;
         log.info("----Start -> Getting all data from external API----");
-        String url = "https://disease.sh/v3/covid-19/countries/" + country;
+        StringBuilder url = new StringBuilder().append("https://disease.sh/v3/covid-19/countries/").append(country);
         
         if (date == 1){
-            url += "?yesterday=true&strict=true";
+            url = url.append("?yesterday=true&strict=true");
         } else if (date == 2){
-            url += "?twoDaysAgo=true&strict=true";
+            url = url.append("?twoDaysAgo=true&strict=true");
         } else{
-            url += "?strict=true";
+            url = url.append("?strict=true");
         }
 
         try {
-            response = this.httpApi.httpGet(url);
+            response = this.httpApi.httpGet(url.toString());
             log.info("---- Successful get request to external API");
         } catch (JSONException e) {
             System.err.println(e);
