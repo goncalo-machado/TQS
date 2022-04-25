@@ -78,7 +78,7 @@ public class Cache {
             }
         }else {
             log.info("Data not found in the cache");
-            misses++;
+            increaseMisses();
             return null;
         }
     }
@@ -138,7 +138,7 @@ public class Cache {
         return hits;
     }
 
-    public void setHits(int hits2) {
+    public static void setHits(int hits2) {
         hits = hits2;
     }
 
@@ -146,7 +146,7 @@ public class Cache {
         return misses;
     }
 
-    public void setMisses(int misses2) {
+    public static void setMisses(int misses2) {
         misses = misses2;
     }
 
@@ -154,7 +154,7 @@ public class Cache {
         return getRequests;
     }
 
-    public void setGetRequests(int getRequests2) {
+    public static void setGetRequests(int getRequests2) {
         getRequests = getRequests2;
     }
 
@@ -162,7 +162,7 @@ public class Cache {
         return saveRequests;
     }
 
-    public void setSaveRequests(int saveRequests2) {
+    public static void setSaveRequests(int saveRequests2) {
         saveRequests = saveRequests2;
     }
 
@@ -170,7 +170,7 @@ public class Cache {
         return deleteRequests;
     }
 
-    public void setDeleteRequests(int deleteRequests2) {
+    public static void setDeleteRequests(int deleteRequests2) {
         deleteRequests = deleteRequests2;
     }
 }

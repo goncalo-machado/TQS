@@ -16,7 +16,7 @@ import pt.ua.tqs.covidtracker.resolver.CovidDataResolver;
 import pt.ua.tqs.covidtracker.services.CovidDataService;
 
 @ExtendWith(MockitoExtension.class)
-public class ServiceTest {
+class ServiceTest {
     
     @Mock(lenient = true)
     private CovidDataResolver resolver;
@@ -47,8 +47,8 @@ public class ServiceTest {
         String country = "Portugal";
         int dayOfData = 0;
         CovidData data = service.getDataByCountryAndDayOfData(country, dayOfData);
-        assertEquals(data.getCountry(), country);
-        assertEquals(data.getDayOfData(), dayOfData);
+        assertEquals(country, data.getCountry());
+        assertEquals(dayOfData, data.getDayOfData());
     }
 
     @Test
@@ -56,15 +56,15 @@ public class ServiceTest {
         String country = "Portugal";
         int dayOfData = 1;
         CovidData data = service.getDataByCountryAndDayOfData(country, dayOfData);
-        assertEquals(data.getCountry(), country);
-        assertEquals(data.getDayOfData(), dayOfData);
+        assertEquals(country, data.getCountry());
+        assertEquals(dayOfData,data.getDayOfData());
     }
 
     @Test
     void whenDataNotInCacheAndNotInResolverThrowJsonException(){
         String country = "Portugal";
         int dayOfData = 2;
-        assertEquals(service.getDataByCountryAndDayOfData(country, dayOfData), null);
+        assertEquals(null, service.getDataByCountryAndDayOfData(country, dayOfData));
     }
 
 }

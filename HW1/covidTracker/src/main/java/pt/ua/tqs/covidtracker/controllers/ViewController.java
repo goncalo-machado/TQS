@@ -13,8 +13,6 @@ import pt.ua.tqs.covidtracker.models.CountryDayofData;
 import pt.ua.tqs.covidtracker.models.CovidData;
 import pt.ua.tqs.covidtracker.services.CovidDataService;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
