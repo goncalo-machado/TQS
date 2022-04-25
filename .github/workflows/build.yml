@@ -7,7 +7,7 @@ on:
     types: [opened, synchronize, reopened]
 defaults:
     run:
-      working-directory: HW1/covid_tracker
+      working-directory: HW1/covidTracker
 jobs:
   build:
     name: Build
