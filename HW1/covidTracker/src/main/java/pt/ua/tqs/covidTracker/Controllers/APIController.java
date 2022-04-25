@@ -1,4 +1,4 @@
-package pt.ua.tqs.covidtracker.Controllers;
+package pt.ua.tqs.covidtracker.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pt.ua.tqs.covidtracker.Exceptions.BadDayOfDataException;
 import pt.ua.tqs.covidtracker.Exceptions.BadRequestException;
-import pt.ua.tqs.covidtracker.Models.CovidData;
-import pt.ua.tqs.covidtracker.Services.CovidDataService;
+import pt.ua.tqs.covidtracker.models.CovidData;
+import pt.ua.tqs.covidtracker.services.CovidDataService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

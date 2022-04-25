@@ -1,4 +1,4 @@
-package pt.ua.tqs.covidtracker.Models;
+package pt.ua.tqs.covidtracker.models;
 
 public class CountryDayofData {
 

@@ -10,10 +10,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import pt.ua.tqs.covidtracker.Cache.Cache;
-import pt.ua.tqs.covidtracker.Models.CovidData;
-import pt.ua.tqs.covidtracker.Resolver.CovidDataResolver;
-import pt.ua.tqs.covidtracker.Services.CovidDataService;
+import pt.ua.tqs.covidtracker.cache.Cache;
+import pt.ua.tqs.covidtracker.models.CovidData;
+import pt.ua.tqs.covidtracker.resolver.CovidDataResolver;
+import pt.ua.tqs.covidtracker.services.CovidDataService;
 
 @ExtendWith(MockitoExtension.class)
 public class ServiceTest {

@@ -1,4 +1,4 @@
-package pt.ua.tqs.covidtracker.Resolver;
+package pt.ua.tqs.covidtracker.resolver;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +9,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import pt.ua.tqs.covidtracker.Exceptions.BadUrlException;
-import pt.ua.tqs.covidtracker.HTTP.HTTPAPI;
-import pt.ua.tqs.covidtracker.Models.CovidData;
+import pt.ua.tqs.covidtracker.http.HTTPAPI;
+import pt.ua.tqs.covidtracker.models.CovidData;
 
 @Component
 public class CovidDataResolver {

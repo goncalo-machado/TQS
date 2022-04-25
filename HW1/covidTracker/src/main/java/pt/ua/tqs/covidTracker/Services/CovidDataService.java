@@ -1,4 +1,4 @@
-package pt.ua.tqs.covidtracker.Services;
+package pt.ua.tqs.covidtracker.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pt.ua.tqs.covidtracker.Cache.Cache;
-import pt.ua.tqs.covidtracker.Models.CovidData;
-import pt.ua.tqs.covidtracker.Resolver.CovidDataResolver;
+import pt.ua.tqs.covidtracker.models.CovidData;
+import pt.ua.tqs.covidtracker.resolver.CovidDataResolver;
 
 @Service
 public class CovidDataService {

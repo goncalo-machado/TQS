@@ -1,4 +1,4 @@
-package pt.ua.tqs.covidtracker.HTTP;
+package pt.ua.tqs.covidtracker.http;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

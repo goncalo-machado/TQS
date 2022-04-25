@@ -12,10 +12,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import pt.ua.tqs.covidtracker.Exceptions.BadUrlException;
-import pt.ua.tqs.covidtracker.HTTP.HTTPAPI;
-import pt.ua.tqs.covidtracker.Models.CovidData;
-import pt.ua.tqs.covidtracker.Resolver.CovidDataResolver;
+import pt.ua.tqs.covidtracker.exceptions.BadUrlException;
+import pt.ua.tqs.covidtracker.http.HTTPAPI;
+import pt.ua.tqs.covidtracker.models.CovidData;
+import pt.ua.tqs.covidtracker.resolver.CovidDataResolver;
 
 @ExtendWith(MockitoExtension.class)
 public class ResolverTest {

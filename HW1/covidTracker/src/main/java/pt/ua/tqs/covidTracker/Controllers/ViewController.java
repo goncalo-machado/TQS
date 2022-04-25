@@ -1,4 +1,4 @@
-package pt.ua.tqs.covidtracker.Controllers;
+package pt.ua.tqs.covidtracker.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,9 +9,9 @@ import org.springframework.ui.Model;
 
 import pt.ua.tqs.covidtracker.Cache.Cache;
 import pt.ua.tqs.covidtracker.Exceptions.BadRequestException;
-import pt.ua.tqs.covidtracker.Models.CountryDayofData;
-import pt.ua.tqs.covidtracker.Models.CovidData;
-import pt.ua.tqs.covidtracker.Services.CovidDataService;
+import pt.ua.tqs.covidtracker.models.CountryDayofData;
+import pt.ua.tqs.covidtracker.models.CovidData;
+import pt.ua.tqs.covidtracker.services.CovidDataService;
 
 import java.io.IOException;
 import java.text.ParseException;
