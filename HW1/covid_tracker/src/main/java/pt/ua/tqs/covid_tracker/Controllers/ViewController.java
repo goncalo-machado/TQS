@@ -39,9 +39,9 @@ public class ViewController {
         HashMap<String, Integer> hashMap = new HashMap<>();
         hashMap.put("Hits", Cache.getHits());
         hashMap.put("Misses", Cache.getMisses());
-        hashMap.put("Get Requests", Cache.getGet_requests());
-        hashMap.put("Save Requests", Cache.getSave_requests());
-        hashMap.put("Delete Requests", Cache.getDelete_requests());
+        hashMap.put("Get Requests", Cache.getGetRequests());
+        hashMap.put("Save Requests", Cache.getSaveRequests());
+        hashMap.put("Delete Requests", Cache.getDeleteRequests());
 
         model.addAttribute("cacheStats", hashMap);
         

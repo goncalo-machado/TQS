@@ -21,9 +21,9 @@ public class Cache {
 
     private static int hits = 0;
     private static int misses = 0;
-    private static int get_requests = 0;
-    private static int save_requests = 0;
-    private static int delete_requests = 0;
+    private static int getRequests = 0;
+    private static int saveRequests = 0;
+    private static int deleteRequests = 0;
 
     @Autowired
     CovidDataRepository covidRepo;
@@ -38,10 +38,15 @@ public class Cache {
         this.ttl = 180;
     }
 
+    public static void increaseGetRequests(){
+        getRequests++;
+    }
+
     public CovidData getData(String country, int dayOfData){
         
-        get_requests++;
+        increaseGetRequests();
         
+        country = country.replaceAll("[\n\r\t]", "_");
         log.info("Getting data from repo for country " + country + " and dayOfData " + dayOfData);
         CovidData data = covidRepo.findByCountryAndDayOfData(country, dayOfData);
 
@@ -66,17 +71,17 @@ public class Cache {
     public void deleteMultipleData(List<CovidData> data){
         log.info("Deleting multiple data from cache -> " + data);
         covidRepo.deleteAll(data);
-        delete_requests ++;
+        deleteRequests ++;
     }
 
     public void deleteSingleData(CovidData data){
         log.info("Deleting single data from cache -> " + data);
         covidRepo.delete(data);
-        delete_requests ++;
+        deleteRequests ++;
     }
 
     public void saveData(CovidData data){
-        save_requests++;
+        saveRequests++;
         List<CovidData> dataInCache = covidRepo.findAll();
         for (CovidData covidData : dataInCache) {
             if(data.isEqual(covidData)){
@@ -130,27 +135,27 @@ public class Cache {
         misses = misses2;
     }
 
-    public static int getGet_requests() {
-        return get_requests;
+    public static int getGetRequests() {
+        return getRequests;
     }
 
-    public void setGet_requests(int get_requests2) {
-        get_requests = get_requests2;
+    public void setGetRequests(int getRequests2) {
+        getRequests = getRequests2;
     }
 
-    public static int getSave_requests() {
-        return save_requests;
+    public static int getSaveRequests() {
+        return saveRequests;
     }
 
-    public void setSave_requests(int save_requests2) {
-        save_requests = save_requests2;
+    public void setSaveRequests(int saveRequests2) {
+        saveRequests = saveRequests2;
     }
 
-    public static int getDelete_requests() {
-        return delete_requests;
+    public static int getDeleteRequests() {
+        return deleteRequests;
     }
 
-    public void setDelete_requests(int delete_requests2) {
-        delete_requests = delete_requests2;
+    public void setDeleteRequests(int deleteRequests2) {
+        deleteRequests = deleteRequests2;
     }
 }

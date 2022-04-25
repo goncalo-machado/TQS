@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import pt.ua.tqs.covid_tracker.Exceptions.BadUrlException;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -33,8 +34,12 @@ public class HTTPAPI {
                             .build();
             response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
             log.info("Success of API Call to {}", url);
-        } catch (Exception e){
+        } catch (IOException e){
             log.error("Error -> API Call to " + url, e);
+            throw new BadUrlException("Bad url " + url);
+        } catch (InterruptedException e){
+            log.error("Error -> API Call to " + url, e);
+            Thread.currentThread().interrupt();
             throw new BadUrlException("Bad url " + url);
         }
 
