@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import pt.ua.tqs.covidtracker.Exceptions.BadUrlException;
+import pt.ua.tqs.covidtracker.exceptions.BadUrlException;
 
 import java.net.URI;
 import java.net.http.HttpClient;

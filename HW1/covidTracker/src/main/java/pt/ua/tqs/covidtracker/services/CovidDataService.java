@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pt.ua.tqs.covidtracker.Cache.Cache;
+import pt.ua.tqs.covidtracker.cache.Cache;
 import pt.ua.tqs.covidtracker.models.CovidData;
 import pt.ua.tqs.covidtracker.resolver.CovidDataResolver;
 

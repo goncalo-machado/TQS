@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 
-import pt.ua.tqs.covidtracker.Cache.Cache;
-import pt.ua.tqs.covidtracker.Exceptions.BadRequestException;
+import pt.ua.tqs.covidtracker.cache.Cache;
+import pt.ua.tqs.covidtracker.exceptions.BadRequestException;
 import pt.ua.tqs.covidtracker.models.CountryDayofData;
 import pt.ua.tqs.covidtracker.models.CovidData;
 import pt.ua.tqs.covidtracker.services.CovidDataService;

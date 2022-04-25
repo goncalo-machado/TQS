@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import pt.ua.tqs.covidtracker.Exceptions.BadUrlException;
+import pt.ua.tqs.covidtracker.exceptions.BadUrlException;
 import pt.ua.tqs.covidtracker.http.HTTPAPI;
 import pt.ua.tqs.covidtracker.models.CovidData;
 

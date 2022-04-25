@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import pt.ua.tqs.covidtracker.Exceptions.BadDayOfDataException;
-import pt.ua.tqs.covidtracker.Exceptions.BadRequestException;
+import pt.ua.tqs.covidtracker.exceptions.BadDayOfDataException;
+import pt.ua.tqs.covidtracker.exceptions.BadRequestException;
 import pt.ua.tqs.covidtracker.models.CovidData;
 import pt.ua.tqs.covidtracker.services.CovidDataService;
 
