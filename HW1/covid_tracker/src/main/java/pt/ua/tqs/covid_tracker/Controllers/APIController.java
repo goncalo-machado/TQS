@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import pt.ua.tqs.covid_tracker.Exceptions.BadDayOfDataException;
 import pt.ua.tqs.covid_tracker.Exceptions.BadRequestException;
 import pt.ua.tqs.covid_tracker.Models.CovidData;
-import pt.ua.tqs.covid_tracker.Repository.CovidDataRepository;
 import pt.ua.tqs.covid_tracker.Services.CovidDataService;
 
 import java.io.IOException;
@@ -26,9 +25,6 @@ public class APIController {
 
     @Autowired
     private CovidDataService service;
-
-    @Autowired
-    private CovidDataRepository covidRepo;
 
     @GetMapping("/get/country")
     public ResponseEntity<CovidData> getDataByCountry_AndOr_DayOfData(@RequestParam(value = "country", required = true) String country, @RequestParam(value = "dayOfData", defaultValue = "Today") String dayOfData) throws BadRequestException, BadDayOfDataException, IOException{

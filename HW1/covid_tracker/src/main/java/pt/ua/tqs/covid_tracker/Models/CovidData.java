@@ -1,6 +1,5 @@
 package pt.ua.tqs.covid_tracker.Models;
 
-import java.sql.Date;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -41,33 +40,6 @@ public class CovidData {
 
     public CovidData(){
 
-    }
-
-    public CovidData(String country, long updated, int cases, int todayCases, int deaths, int todayDeaths, int recovered, int todayRecovered, int active, int critical, float casesPerOneMillion, float deathsPerOneMillion, int tests, float testsPerOneMillion, int population, String continent, float oneCasePerPeople, float oneDeathPerPeople, float oneTestPerPeople, float activePerOneMillion, float recoveredPerOneMillion, float criticalPerOneMillion, int dayOfData) {
-        this.country = country;
-        this.updated = updated;
-        this.cases = cases;
-        this.todayCases = todayCases;
-        this.deaths = deaths;
-        this.todayDeaths = todayDeaths;
-        this.recovered = recovered;
-        this.todayRecovered = todayRecovered;
-        this.active = active;
-        this.critical = critical;
-        this.casesPerOneMillion = casesPerOneMillion;
-        this.deathsPerOneMillion = deathsPerOneMillion;
-        this.tests = tests;
-        this.testsPerOneMillion = testsPerOneMillion;
-        this.population = population;
-        this.continent = continent;
-        this.oneCasePerPeople = oneCasePerPeople;
-        this.oneDeathPerPeople = oneDeathPerPeople;
-        this.oneTestPerPeople = oneTestPerPeople;
-        this.activePerOneMillion = activePerOneMillion;
-        this.recoveredPerOneMillion = recoveredPerOneMillion;
-        this.criticalPerOneMillion = criticalPerOneMillion;
-        this.created = System.currentTimeMillis();
-        this.dayOfData = dayOfData;
     }
     
 

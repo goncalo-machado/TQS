@@ -1,6 +1,5 @@
 package pt.ua.tqs.covid_tracker.Services;
 
-import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +24,10 @@ public class CovidDataService {
 
         CovidData data = cache.getData(country, day);
         if(data == null){
-            try{
-                log.info("Data not in cache, getting from external API");
-                data = resolver.getCountryData(country, day);
-            } catch (JSONException e){
-                System.err.println(e);
-                log.error("Error getting data from external API-> " + e.toString());
+            log.info("Data not in cache, getting from external API");
+            data = resolver.getCountryData(country, day);
+            if(data == null){
+                log.error("Error getting data from external API -> Returning null");
                 return null;
             }
             log.info("Successful get request from API, saving data in cache");

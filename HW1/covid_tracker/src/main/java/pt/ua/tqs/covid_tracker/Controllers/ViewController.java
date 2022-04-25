@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 
 import pt.ua.tqs.covid_tracker.Cache.Cache;
+import pt.ua.tqs.covid_tracker.Exceptions.BadRequestException;
 import pt.ua.tqs.covid_tracker.Models.CountryDayofData;
 import pt.ua.tqs.covid_tracker.Models.CovidData;
 import pt.ua.tqs.covid_tracker.Services.CovidDataService;
@@ -48,10 +49,14 @@ public class ViewController {
 	}
 
     @PostMapping("/countryStats")
-	public String countryStats(@ModelAttribute("countryDayOfData") CountryDayofData countryDayofData, Model model) throws ParseException, IOException {
+	public String countryStats(@ModelAttribute("countryDayOfData") CountryDayofData countryDayofData, Model model) throws ParseException, IOException, BadRequestException {
 		log.info("-- Start -- Getting data for contryStatsPage");
 
         CovidData data = service.getDataByCountryAndDayOfData(countryDayofData.getCountry(), countryDayofData.getDayOfData());
+
+        if (data == null){
+            throw new BadRequestException("Bad request -> country :" + countryDayofData.getCountry() + " day: " + countryDayofData.getDayOfData());
+        }
 
         HashMap<String, Object> hashMap = new HashMap<>();
 

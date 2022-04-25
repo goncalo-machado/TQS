@@ -43,7 +43,7 @@ public class Cache {
         get_requests++;
         
         log.info("Getting data from repo for country " + country + " and dayOfData " + dayOfData);
-        CovidData data = covidRepo.findByCountryAndDayOfData(country, dayOfData).orElse(null);
+        CovidData data = covidRepo.findByCountryAndDayOfData(country, dayOfData);
 
         if(data != null){
             if (isExpired(data)) {
@@ -93,7 +93,7 @@ public class Cache {
     @Scheduled(fixedRate = 60 * 1000)
     public void cleanCache() {
         log.info("Checking for expired data");
-        Date expiredDate = new Date(System.currentTimeMillis() - this.ttl * 1000);
+        long expiredDate = System.currentTimeMillis() - this.ttl * 1000;
         List<CovidData> expiredCovidData = covidRepo.findAllByCreatedLessThanEqual(expiredDate);
         deleteMultipleData(expiredCovidData);
     }
