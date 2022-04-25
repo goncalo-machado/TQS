@@ -1,6 +1,7 @@
 package pt.ua.tqs.covidtracker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.json.JSONException;
@@ -18,7 +19,7 @@ import pt.ua.tqs.covidtracker.models.CovidData;
 import pt.ua.tqs.covidtracker.resolver.CovidDataResolver;
 
 @ExtendWith(MockitoExtension.class)
-public class ResolverTest {
+class ResolverTest {
     
     @Mock
     HTTPAPI httpapi;
@@ -42,10 +43,10 @@ public class ResolverTest {
         }
         CovidData dataPortugal = resolver.jsonToData(stringPortugal, false);
         CovidData dataWorld = resolver.jsonToData(stringWorld, true);
-        assertTrue(dataPortugal != null);
+        assertNotNull(dataPortugal);
         assertEquals(continentPortugal, dataPortugal.getContinent());
         assertEquals(countryPortugal, dataPortugal.getCountry());
-        assertTrue(dataWorld != null);
+        assertNotNull(dataWorld);
         assertEquals("World", dataWorld.getContinent());
         assertEquals("World", dataWorld.getCountry());
     }
@@ -53,7 +54,7 @@ public class ResolverTest {
     @Test
     void whenBadJsonUsedInJsonToDataThenReturnNull(){
         String message = "{\"message\":\"Country not found or doesn't have any cases\"}";
-        assertEquals(resolver.jsonToData(message, true), null);
+        assertEquals(null, resolver.jsonToData(message, true));
 
     }
 
@@ -72,7 +73,7 @@ public class ResolverTest {
         String badUrl = "https://disease.sh/v3/covid-19/countries/asdfg?strict=true";
         Mockito.when(httpapi.httpGet(badUrl)).thenReturn("{\"message\":\"Country not found or doesn't have any cases\"}");
 
-        assertEquals(resolver.getCountryData("asdfg", 0), null);
+        assertEquals(null, resolver.getCountryData("asdfg", 0));
     }
 
     @Test 

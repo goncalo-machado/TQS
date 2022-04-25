@@ -49,7 +49,7 @@ public class ViewController {
 	}
 
     @PostMapping("/countryStats")
-	public String countryStats(@ModelAttribute("countryDayOfData") CountryDayofData countryDayofData, Model model) throws ParseException, IOException, BadRequestException {
+	public String countryStats(@ModelAttribute("countryDayOfData") CountryDayofData countryDayofData, Model model) throws BadRequestException {
 		log.info("-- Start -- Getting data for contryStatsPage");
 
         CovidData data = service.getDataByCountryAndDayOfData(countryDayofData.getCountry(), countryDayofData.getDayOfData());

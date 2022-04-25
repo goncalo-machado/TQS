@@ -16,6 +16,7 @@ import pt.ua.tqs.covidtracker.models.CovidData;
 public class CovidDataResolver {
 
     private static final Logger log = LoggerFactory.getLogger(CovidDataResolver.class);
+    private static final String WORLD = "World";
 
     @Autowired
     HTTPAPI httpApi;
@@ -45,12 +46,12 @@ public class CovidDataResolver {
         }
         log.info("---- Successful get request to external API");
 
-        log.info("RESPONSE ----------- " + response);
+        log.info("RESPONSE ----------- {}", response);
 
         log.info("---- Making CovidData objects out of data");
-        CovidData data = jsonToData(response, country.equalsIgnoreCase("World"));
+        CovidData data = jsonToData(response, country.equalsIgnoreCase(WORLD));
 
-        log.info("DATA ----------- " + data);
+        log.info("DATA ----------- {}", data);
 
         log.info("----End -> Getting all data from external API----");
         return data;
@@ -59,7 +60,7 @@ public class CovidDataResolver {
     public String urlBuilder(String country, int date){
         
         StringBuilder url = new StringBuilder();
-        if(country.equalsIgnoreCase("World")){
+        if(country.equalsIgnoreCase(WORLD)){
             url = url.append("https://disease.sh/v3/covid-19/all");
         
             if (date == 1){
@@ -106,8 +107,8 @@ public class CovidDataResolver {
             covidData.setRecoveredPerOneMillion(json.getLong("recoveredPerOneMillion"));
             covidData.setCriticalPerOneMillion(json.getLong("criticalPerOneMillion"));
             if(worldData){
-                covidData.setCountry("World");
-                covidData.setContinent("World");
+                covidData.setCountry(WORLD);
+                covidData.setContinent(WORLD);
             }else{
                 covidData.setCountry(json.getString("country"));
                 covidData.setContinent(json.getString("continent"));

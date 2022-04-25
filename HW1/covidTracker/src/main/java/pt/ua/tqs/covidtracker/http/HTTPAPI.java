@@ -15,10 +15,6 @@ import java.net.http.HttpResponse;
 public class HTTPAPI {
     private static final Logger log = LoggerFactory.getLogger(HTTPAPI.class);
 
-    public HTTPAPI(){
-        
-    }
-
     public String httpGet(String url) throws BadUrlException{
 
         HttpRequest request;

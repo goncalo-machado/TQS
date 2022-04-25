@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import pt.ua.tqs.covidtracker.exceptions.BadUrlException;
 import pt.ua.tqs.covidtracker.http.HTTPAPI;
 
-public class HTTPAPITest {
+class HTTPAPITest {
 
     HTTPAPI httpapi = new HTTPAPI();
     

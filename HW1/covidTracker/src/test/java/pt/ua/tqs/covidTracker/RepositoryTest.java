@@ -15,7 +15,7 @@ import pt.ua.tqs.covidtracker.models.CovidData;
 import pt.ua.tqs.covidtracker.repository.CovidDataRepository;
 
 @DataJpaTest
-public class RepositoryTest {
+class RepositoryTest {
     
     @Autowired
     private TestEntityManager entityManager;
@@ -45,19 +45,19 @@ public class RepositoryTest {
     @Test
     void whenFindByPortugalAndToday_ReturnValidCovidData(){
         CovidData result = covidDataRepository.findByCountryAndDayOfData("Portugal", 0);
-        assertEquals(result, data);
+        assertEquals(data, result);
     }
 
     @Test
     void whenFindByInvalidAndToday_ReturnNull(){
         CovidData result = covidDataRepository.findByCountryAndDayOfData("Not Exists", 0);
-        assertEquals(result,null);
+        assertEquals(null, result);
     }
 
     @Test
     void whenFindByPortugalAndInvalid_ReturnNull(){
         CovidData result = covidDataRepository.findByCountryAndDayOfData("Portugal", 4);
-        assertEquals(result,null);
+        assertEquals(null, result);
     }
 
     @Test
@@ -72,8 +72,8 @@ public class RepositoryTest {
         entityManager.persistAndFlush(data2);
 
         List<CovidData> result = covidDataRepository.findAllByCreatedLessThanEqual(2500);
-        assertEquals(result.size(),1);
-        assertEquals(result.get(0), data2);
+        assertEquals(1, result.size());
+        assertEquals(data2, result.get(0));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class RepositoryTest {
         entityManager.persistAndFlush(data2);
 
         List<CovidData> result = covidDataRepository.findAllByCreatedLessThanEqual(2500);
-        assertEquals(result.size(),0);
+        assertEquals(0, result.size());
     }
     
 }

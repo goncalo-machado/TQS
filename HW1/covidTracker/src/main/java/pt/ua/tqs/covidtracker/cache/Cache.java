@@ -42,6 +42,21 @@ public class Cache {
         getRequests++;
     }
 
+    public static void increaseSaveRequests(){
+        saveRequests++;
+    }
+
+    public static void increaseDeleteRequests(){
+        deleteRequests++;
+    }
+
+    public static void increaseHits(){
+        hits++;
+    }
+
+    public static void increaseMisses(){
+        misses++;
+    }
     public CovidData getData(String country, int dayOfData){
         
         increaseGetRequests();
@@ -53,12 +68,12 @@ public class Cache {
         if(data != null){
             if (isExpired(data)) {
                 log.info("Data has expired in the cache");
-                misses++;
+                increaseMisses();
                 deleteSingleData(data);
                 return null;
             } else {
                 log.info("Data exists in cache");
-                hits++;
+                increaseHits();
                 return data;
             }
         }else {
@@ -71,26 +86,26 @@ public class Cache {
     public void deleteMultipleData(List<CovidData> data){
         log.info("Deleting multiple data from cache -> {}", data);
         covidRepo.deleteAll(data);
-        deleteRequests ++;
+        increaseDeleteRequests();
     }
 
     public void deleteSingleData(CovidData data){
         log.info("Deleting single data from cache -> {}", data);
         covidRepo.delete(data);
-        deleteRequests ++;
+        increaseDeleteRequests();
     }
 
     public void saveData(CovidData data){
-        saveRequests++;
+        increaseSaveRequests();
         List<CovidData> dataInCache = covidRepo.findAll();
         for (CovidData covidData : dataInCache) {
             if(data.isEqual(covidData)){
                 log.info("Data already exists in Cache -> {}", data);
-                hits ++;
+                increaseHits();
                 return;
             }
         }
-        misses++;
+        increaseMisses();
         log.info("Savig data in cache -> {}", data);
         covidRepo.save(data);
     }
