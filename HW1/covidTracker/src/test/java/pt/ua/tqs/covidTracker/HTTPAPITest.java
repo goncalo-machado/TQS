@@ -1,12 +1,12 @@
-package pt.ua.tqs.covidTracker;
+package pt.ua.tqs.covidtracker;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import pt.ua.tqs.covidTracker.Exceptions.BadUrlException;
-import pt.ua.tqs.covidTracker.HTTP.HTTPAPI;
+import pt.ua.tqs.covidtracker.Exceptions.BadUrlException;
+import pt.ua.tqs.covidtracker.HTTP.HTTPAPI;
 
 public class HTTPAPITest {
 

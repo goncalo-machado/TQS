@@ -1,10 +1,10 @@
-package pt.ua.tqs.covidTracker.HTTP;
+package pt.ua.tqs.covidtracker.HTTP;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import pt.ua.tqs.covidTracker.Exceptions.BadUrlException;
+import pt.ua.tqs.covidtracker.Exceptions.BadUrlException;
 
 import java.net.URI;
 import java.net.http.HttpClient;

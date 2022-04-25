@@ -1,4 +1,4 @@
-package pt.ua.tqs.covidTracker.Exceptions;
+package pt.ua.tqs.covidtracker.Exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

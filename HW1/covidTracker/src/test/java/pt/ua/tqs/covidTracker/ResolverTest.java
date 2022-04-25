@@ -1,4 +1,4 @@
-package pt.ua.tqs.covidTracker;
+package pt.ua.tqs.covidtracker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -12,10 +12,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import pt.ua.tqs.covidTracker.Exceptions.BadUrlException;
-import pt.ua.tqs.covidTracker.HTTP.HTTPAPI;
-import pt.ua.tqs.covidTracker.Models.CovidData;
-import pt.ua.tqs.covidTracker.Resolver.CovidDataResolver;
+import pt.ua.tqs.covidtracker.Exceptions.BadUrlException;
+import pt.ua.tqs.covidtracker.HTTP.HTTPAPI;
+import pt.ua.tqs.covidtracker.Models.CovidData;
+import pt.ua.tqs.covidtracker.Resolver.CovidDataResolver;
 
 @ExtendWith(MockitoExtension.class)
 public class ResolverTest {

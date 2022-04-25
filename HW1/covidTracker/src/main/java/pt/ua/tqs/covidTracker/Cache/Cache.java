@@ -1,12 +1,12 @@
-package pt.ua.tqs.covidTracker.Cache;
+package pt.ua.tqs.covidtracker.Cache;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 
-import pt.ua.tqs.covidTracker.Models.CovidData;
-import pt.ua.tqs.covidTracker.Repository.CovidDataRepository;
+import pt.ua.tqs.covidtracker.Models.CovidData;
+import pt.ua.tqs.covidtracker.Repository.CovidDataRepository;
 
 import java.sql.Date;
 import java.util.List;

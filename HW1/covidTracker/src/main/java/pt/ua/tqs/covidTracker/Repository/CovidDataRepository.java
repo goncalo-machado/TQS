@@ -1,11 +1,11 @@
-package pt.ua.tqs.covidTracker.Repository;
+package pt.ua.tqs.covidtracker.Repository;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import pt.ua.tqs.covidTracker.Models.CovidData;
+import pt.ua.tqs.covidtracker.Models.CovidData;
 
 @Repository
 public interface CovidDataRepository extends JpaRepository<CovidData, Long> {

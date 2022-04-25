@@ -1,4 +1,4 @@
-package pt.ua.tqs.covidTracker.Controllers;
+package pt.ua.tqs.covidtracker.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,12 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import pt.ua.tqs.covidTracker.Exceptions.BadDayOfDataException;
-import pt.ua.tqs.covidTracker.Exceptions.BadRequestException;
-import pt.ua.tqs.covidTracker.Models.CovidData;
-import pt.ua.tqs.covidTracker.Services.CovidDataService;
-
-import java.io.IOException;
+import pt.ua.tqs.covidtracker.Exceptions.BadDayOfDataException;
+import pt.ua.tqs.covidtracker.Exceptions.BadRequestException;
+import pt.ua.tqs.covidtracker.Models.CovidData;
+import pt.ua.tqs.covidtracker.Services.CovidDataService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,14 +25,14 @@ public class APIController {
     private CovidDataService service;
 
     @GetMapping("/get/country")
-    public ResponseEntity<CovidData> getDataByCountry_AndOr_DayOfData(@RequestParam(value = "country", required = true) String country, @RequestParam(value = "dayOfData", defaultValue = "Today") String dayOfData) throws BadRequestException, BadDayOfDataException, IOException{
+    public ResponseEntity<CovidData> getDataByCountryAndOrDayOfData(@RequestParam(value = "country", required = true) String country, @RequestParam(value = "dayOfData", defaultValue = "Today") String dayOfData) throws BadRequestException, BadDayOfDataException{
         log.info("Get Request: Data by country and or dayOfData");
         int day = -1;
-        if(dayOfData.toUpperCase().equals("TODAY")){
+        if(dayOfData.equalsIgnoreCase("TODAY")){
             day = 0;
-        } else if(dayOfData.toUpperCase().equals("YESTERDAY")){
+        } else if(dayOfData.equalsIgnoreCase("YESTERDAY")){
             day = 1;
-        } else if(dayOfData.toUpperCase().equals("DAY BEFORE YESTERDAY")){
+        } else if(dayOfData.equalsIgnoreCase("DAY BEFORE YESTERDAY")){
             day = 2;
         }
 

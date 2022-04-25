@@ -1,4 +1,4 @@
-package pt.ua.tqs.covidTracker;
+package pt.ua.tqs.covidtracker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -10,10 +10,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import pt.ua.tqs.covidTracker.Cache.Cache;
-import pt.ua.tqs.covidTracker.Models.CovidData;
-import pt.ua.tqs.covidTracker.Resolver.CovidDataResolver;
-import pt.ua.tqs.covidTracker.Services.CovidDataService;
+import pt.ua.tqs.covidtracker.Cache.Cache;
+import pt.ua.tqs.covidtracker.Models.CovidData;
+import pt.ua.tqs.covidtracker.Resolver.CovidDataResolver;
+import pt.ua.tqs.covidtracker.Services.CovidDataService;
 
 @ExtendWith(MockitoExtension.class)
 public class ServiceTest {
