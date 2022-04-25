@@ -47,7 +47,7 @@ public class Cache {
         increaseGetRequests();
         
         country = country.replaceAll("[\n\r\t]", "_");
-        log.info("Getting data from repo for country " + country + " and dayOfData " + dayOfData);
+        log.info("Getting data from repo for country {} and dayOfData {}",country, dayOfData);
         CovidData data = covidRepo.findByCountryAndDayOfData(country, dayOfData);
 
         if(data != null){
@@ -69,13 +69,13 @@ public class Cache {
     }
 
     public void deleteMultipleData(List<CovidData> data){
-        log.info("Deleting multiple data from cache -> " + data);
+        log.info("Deleting multiple data from cache -> {}", data);
         covidRepo.deleteAll(data);
         deleteRequests ++;
     }
 
     public void deleteSingleData(CovidData data){
-        log.info("Deleting single data from cache -> " + data);
+        log.info("Deleting single data from cache -> {}", data);
         covidRepo.delete(data);
         deleteRequests ++;
     }
@@ -85,13 +85,13 @@ public class Cache {
         List<CovidData> dataInCache = covidRepo.findAll();
         for (CovidData covidData : dataInCache) {
             if(data.isEqual(covidData)){
-                log.info("Data already exists in Cache -> " + data);
+                log.info("Data already exists in Cache -> {}", data);
                 hits ++;
                 return;
             }
         }
         misses++;
-        log.info("Savig data in cache -> " + data);
+        log.info("Savig data in cache -> {}", data);
         covidRepo.save(data);
     }
     
