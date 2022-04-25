@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pt.ua.tqs.covid_tracker.Exceptions.BadUrlException;
 import pt.ua.tqs.covid_tracker.HTTP.HTTPAPI;
 import pt.ua.tqs.covid_tracker.Models.CovidData;
 
@@ -24,7 +25,12 @@ public class CovidDataResolver {
         String response = null;
         log.info("----Start -> Getting all data from external API----");
 
-        response = this.httpApi.httpGet(urlBuilder(country, date));
+        try {
+            response = this.httpApi.httpGet(urlBuilder(country, date));
+        } catch (BadUrlException e1) {
+            log.error("BadUrlException", e1);
+            return null;
+        }
         JSONObject json;
         try{
             json = new JSONObject(response);

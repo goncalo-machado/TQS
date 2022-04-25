@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import pt.ua.tqs.covid_tracker.Exceptions.BadUrlException;
 import pt.ua.tqs.covid_tracker.HTTP.HTTPAPI;
 import pt.ua.tqs.covid_tracker.Models.CovidData;
 import pt.ua.tqs.covid_tracker.Resolver.CovidDataResolver;
@@ -67,7 +68,7 @@ public class ResolverTest {
     }
 
     @Test 
-    void whenBadResponseFromHttpAPIReturnNull(){
+    void whenBadResponseFromHttpAPIReturnNull() throws BadUrlException{
         String badUrl = "https://disease.sh/v3/covid-19/countries/asdfg?strict=true";
         Mockito.when(httpapi.httpGet(badUrl)).thenReturn("{\"message\":\"Country not found or doesn't have any cases\"}");
 
@@ -75,7 +76,7 @@ public class ResolverTest {
     }
 
     @Test 
-    void whenGoodResponseFromHttpAPIReturnCovidData(){
+    void whenGoodResponseFromHttpAPIReturnCovidData() throws BadUrlException{
         String goodUrl = "https://disease.sh/v3/covid-19/all";
         String stringWorld = "{\"updated\":1650911116796,\"cases\":509711160,\"todayCases\":235610,\"deaths\":6243959,\"todayDeaths\":1015,\"recovered\":462626399,\"todayRecovered\":577195,\"active\":40840802,\"critical\":42409,\"casesPerOneMillion\":65391,\"deathsPerOneMillion\":801,\"tests\":6256136679,\"testsPerOneMillion\":792339,\"population\":7895782874,\"oneCasePerPeople\":0,\"oneDeathPerPeople\":0,\"oneTestPerPeople\":0,\"activePerOneMillion\":5172.48,\"recoveredPerOneMillion\":58591.58,\"criticalPerOneMillion\":5.37,\"affectedCountries\":228}";
 
