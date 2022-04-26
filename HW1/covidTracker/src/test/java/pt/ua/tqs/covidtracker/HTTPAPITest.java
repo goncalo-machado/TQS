@@ -21,4 +21,10 @@ class HTTPAPITest {
     void whenInvalidRequest_ThrowBadURLException(){
         assertThrows(BadUrlException.class, () -> {httpapi.httpGet("NotarealURL");});
     }
+
+    @Test
+    void whenhttpGetsInterruptsThrowBadURLException() {
+        Thread.currentThread().interrupt();
+        assertThrows(BadUrlException.class, () -> {httpapi.httpGet("https://www.google.com/");});
+    }
 }

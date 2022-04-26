@@ -25,7 +25,7 @@ public class CovidDataResolver {
     public CovidData getCountryData(String country, int date){ 
         String response = null;
         log.info("----Start -> Getting all data from external API----");
-
+        
         try {
             response = this.httpApi.httpGet(urlBuilder(country, date));
         } catch (BadUrlException e1) {
