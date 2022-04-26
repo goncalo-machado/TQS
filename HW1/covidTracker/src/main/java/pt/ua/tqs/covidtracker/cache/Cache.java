@@ -28,14 +28,10 @@ public class Cache {
     @Autowired
     CovidDataRepository covidRepo;
 
-    private int ttl;
-
-    public Cache(int ttl){
-        this.ttl = ttl;
-    }
+    private static int ttl = 180;
 
     public Cache(){
-        this.ttl = 180;
+        //Exists for testing purposes
     }
 
     public static void increaseGetRequests(){
@@ -101,11 +97,11 @@ public class Cache {
         for (CovidData covidData : dataInCache) {
             if(data.isEqual(covidData)){
                 log.info("Data already exists in Cache -> {}", data);
-                increaseHits();
+                increaseMisses();
                 return;
             }
         }
-        increaseMisses();
+        increaseHits();
         log.info("Savig data in cache -> {}", data);
         covidRepo.save(data);
     }
@@ -113,26 +109,25 @@ public class Cache {
     @Scheduled(fixedRate = 60 * 1000)
     public void cleanCache() {
         log.info("Checking for expired data");
-        long expiredDate = System.currentTimeMillis() - this.ttl * 1000;
+        long expiredDate = System.currentTimeMillis() - Cache.getTtl() * 1000;
         List<CovidData> expiredCovidData = covidRepo.findAllByCreatedLessThanEqual(expiredDate);
         deleteMultipleData(expiredCovidData);
     }
 
     public boolean isExpired(CovidData data){
         log.info("Checking if data {} is expired", data);
-        Date expiredDate = new Date(System.currentTimeMillis() - this.ttl * 1000);
+        Date expiredDate = new Date(System.currentTimeMillis() - Cache.getTtl() * 1000);
         Date dataCreated = new Date(data.getCreated());
         return dataCreated.before(expiredDate);
     }
 
-    public int getTtl() {
-        return this.ttl;
+    public static int getTtl() {
+        return ttl;
     }
 
-    public void setTtl(int ttl) {
-        this.ttl = ttl;
+    public static void setTtl(int ttl2) {
+        ttl = ttl2;
     }
-
 
     public static int getHits() {
         return hits;
@@ -172,5 +167,14 @@ public class Cache {
 
     public static void setDeleteRequests(int deleteRequests2) {
         deleteRequests = deleteRequests2;
+    }
+
+    //For testing purposes
+    public static void resetCache(){
+        setHits(0);
+        setMisses(0);
+        setDeleteRequests(0);
+        setGetRequests(0);
+        setSaveRequests(0);
     }
 }

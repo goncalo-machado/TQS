@@ -39,7 +39,7 @@ public class CovidData {
     private int dayOfData; //0 for today, 1 for yesterday, 2 for before yesterday
 
     public CovidData(){
-        //Exists for creating the object and setting attribute individually
+        this.created = System.currentTimeMillis();
     }
     
 
