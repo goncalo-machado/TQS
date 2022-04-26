@@ -73,11 +73,22 @@ public class ViewController {
         hashMap.put("TestsPerOneMillion", data.getTestsPerOneMillion());
         hashMap.put("Population", data.getPopulation());
         hashMap.put("OneCasePerPeople", data.getOneCasePerPeople());
-        hashMap.put("oneDeathPerPeople", data.getOneDeathPerPeople());
-        hashMap.put("oneTestPerPeople", data.getOneTestPerPeople());
-        hashMap.put("activePerOneMillion", data.getActivePerOneMillion());
-        hashMap.put("recoveredPerOneMillion", data.getRecoveredPerOneMillion());
-        hashMap.put("criticalPerOneMillion", data.getCriticalPerOneMillion());
+        hashMap.put("OneDeathPerPeople", data.getOneDeathPerPeople());
+        hashMap.put("OneTestPerPeople", data.getOneTestPerPeople());
+        hashMap.put("ActivePerOneMillion", data.getActivePerOneMillion());
+        hashMap.put("RecoveredPerOneMillion", data.getRecoveredPerOneMillion());
+        hashMap.put("CriticalPerOneMillion", data.getCriticalPerOneMillion());
+        hashMap.put("Country", data.getCountry());
+        hashMap.put("Continent", data.getContinent());
+        String day = "";
+        if(data.getDayOfData() == 0){
+            day = "Today";
+        }else if(data.getDayOfData() == 1){
+            day = "Yesterday";
+        }else if(data.getDayOfData() == 2){
+            day = "Two Days Ago";
+        }
+        hashMap.put("DayOfData", day);
 
         model.addAttribute("covidDataMap", hashMap);
 
