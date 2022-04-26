@@ -23,7 +23,7 @@ import pt.ua.tqs.covidtracker.models.CovidData;
 import pt.ua.tqs.covidtracker.repository.CovidDataRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class CacheTest {
+class CacheTest {
     
     @Mock
     CovidDataRepository covidRepo;

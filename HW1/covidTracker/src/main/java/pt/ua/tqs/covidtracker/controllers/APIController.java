@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import pt.ua.tqs.covidtracker.cache.Cache;
 import pt.ua.tqs.covidtracker.exceptions.BadDayOfDataException;
 import pt.ua.tqs.covidtracker.exceptions.BadRequestException;
 import pt.ua.tqs.covidtracker.models.CovidData;
 import pt.ua.tqs.covidtracker.services.CovidDataService;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,6 +49,18 @@ public class APIController {
         }
         
         return new ResponseEntity<>(data, HttpStatus.OK);
+    }
+
+    @GetMapping("/cacheStats")
+    public ResponseEntity<String> getCacheStats(){
+        JSONObject json = new JSONObject();
+        json.put("hits", Cache.getHits());
+        json.put("misses", Cache.getMisses());
+        json.put("getRequests", Cache.getGetRequests());
+        json.put("saveRequests", Cache.getSaveRequests());
+        json.put("deleteRequests", Cache.getDeleteRequests());
+
+        return new ResponseEntity<>(json.toString(), HttpStatus.OK);
     }
 
 }

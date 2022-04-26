@@ -50,6 +50,7 @@ public class CovidDataResolver {
 
         log.info("---- Making CovidData objects out of data");
         CovidData data = jsonToData(response, country.equalsIgnoreCase(WORLD));
+        data.setDayOfData(date);
 
         log.info("DATA ----------- {}", data);
 
