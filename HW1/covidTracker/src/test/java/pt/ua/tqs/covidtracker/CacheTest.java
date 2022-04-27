@@ -142,6 +142,21 @@ class CacheTest {
     }
 
     @Test
+    void testDeleteSingleData(){
+        CovidData data1 = new CovidData();
+
+        cache.deleteSingleData(data1);
+
+        assertEquals(0, Cache.getHits());
+        assertEquals(0, Cache.getMisses());
+        assertEquals(0, Cache.getGetRequests());
+        assertEquals(0, Cache.getSaveRequests());
+        assertEquals(1, Cache.getDeleteRequests());
+
+        verify(covidRepo, times(1)).delete(data1);
+    }
+
+    @Test
     void testDeleteMultipleData(){
         CovidData data1 = new CovidData();
         CovidData data2 = new CovidData();
@@ -158,21 +173,6 @@ class CacheTest {
         assertEquals(1, Cache.getDeleteRequests());
 
         verify(covidRepo, times(1)).deleteAll(list);
-    }
-
-    @Test
-    void testDeleteSingleData(){
-        CovidData data1 = new CovidData();
-
-        cache.deleteSingleData(data1);
-
-        assertEquals(0, Cache.getHits());
-        assertEquals(0, Cache.getMisses());
-        assertEquals(0, Cache.getGetRequests());
-        assertEquals(0, Cache.getSaveRequests());
-        assertEquals(1, Cache.getDeleteRequests());
-
-        verify(covidRepo, times(1)).delete(data1);
     }
 
     @Test
