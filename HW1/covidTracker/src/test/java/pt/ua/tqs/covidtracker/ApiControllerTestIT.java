@@ -96,7 +96,7 @@ class ApiControllerTestIT {
 
         mvc.perform(get("/api/get/country")
         .param("country", "Portugal")
-        .param("dayOfData", "Day Before Yesterday")
+        .param("dayOfData", "Two Days Ago")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

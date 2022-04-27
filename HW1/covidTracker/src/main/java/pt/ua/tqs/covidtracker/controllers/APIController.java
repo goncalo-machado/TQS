@@ -80,7 +80,7 @@ public class APIController {
             day = 0;
         } else if(stringDay.equalsIgnoreCase("YESTERDAY")){
             day = 1;
-        } else if(stringDay.equalsIgnoreCase("DAY BEFORE YESTERDAY")){
+        } else if(stringDay.equalsIgnoreCase("TWO DAYS AGO")){
             day = 2;
         }
         return day;
