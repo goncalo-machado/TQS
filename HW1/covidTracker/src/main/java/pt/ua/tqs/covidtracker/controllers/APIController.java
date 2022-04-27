@@ -29,14 +29,7 @@ public class APIController {
     @GetMapping("/get/country")
     public ResponseEntity<CovidData> getDataByCountryAndOrDayOfData(@RequestParam(value = "country", required = true) String country, @RequestParam(value = "dayOfData", defaultValue = "Today") String dayOfData) throws BadRequestException, BadDayOfDataException{
         log.info("Get Request: Data by country and or dayOfData");
-        int day = -1;
-        if(dayOfData.equalsIgnoreCase("TODAY")){
-            day = 0;
-        } else if(dayOfData.equalsIgnoreCase("YESTERDAY")){
-            day = 1;
-        } else if(dayOfData.equalsIgnoreCase("DAY BEFORE YESTERDAY")){
-            day = 2;
-        }
+        int day = stringDayToIntDay(dayOfData);
 
         if (day == -1){
             throw new BadDayOfDataException("Invalid Day -> " + day);
@@ -54,23 +47,16 @@ public class APIController {
     @GetMapping("/get/continent")
     public ResponseEntity<CovidData> getDataByContinentAndOrDayOfData(@RequestParam(value = "continent", required = true) String continent, @RequestParam(value = "dayOfData", defaultValue = "Today") String dayOfData) throws BadRequestException, BadDayOfDataException{
         log.info("Get Request: Data by continent and or dayOfData");
-        int day = -1;
-        if(dayOfData.equalsIgnoreCase("TODAY")){
-            day = 0;
-        } else if(dayOfData.equalsIgnoreCase("YESTERDAY")){
-            day = 1;
-        } else if(dayOfData.equalsIgnoreCase("DAY BEFORE YESTERDAY")){
-            day = 2;
+        int dayofdata = stringDayToIntDay(dayOfData);
+
+        if (dayofdata == -1){
+            throw new BadDayOfDataException("Invalid Day -> " + dayofdata);
         }
 
-        if (day == -1){
-            throw new BadDayOfDataException("Invalid Day -> " + day);
-        }
-
-        CovidData data = service.getDataByPlaceAndDayOfData(continent, day, true);
+        CovidData data = service.getDataByPlaceAndDayOfData(continent, dayofdata, true);
 
         if (data == null){
-            throw new BadRequestException("Bad request -> continent :" + continent + " day: " + day);
+            throw new BadRequestException("Bad request -> continent :" + continent + " day: " + dayofdata);
         }
         
         return new ResponseEntity<>(data, HttpStatus.OK);
@@ -86,6 +72,18 @@ public class APIController {
         json.put("deleteRequests", Cache.getDeleteRequests());
 
         return new ResponseEntity<>(json.toString(), HttpStatus.OK);
+    }
+
+    public int stringDayToIntDay(String stringDay){
+        int day = -1;
+        if(stringDay.equalsIgnoreCase("TODAY")){
+            day = 0;
+        } else if(stringDay.equalsIgnoreCase("YESTERDAY")){
+            day = 1;
+        } else if(stringDay.equalsIgnoreCase("DAY BEFORE YESTERDAY")){
+            day = 2;
+        }
+        return day;
     }
 
 }

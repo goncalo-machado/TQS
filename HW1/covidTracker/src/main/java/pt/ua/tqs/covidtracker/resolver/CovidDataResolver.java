@@ -17,6 +17,7 @@ public class CovidDataResolver {
 
     private static final Logger log = LoggerFactory.getLogger(CovidDataResolver.class);
     private static final String WORLD = "World";
+    private static final String CONTINENT = "continent";
 
     @Autowired
     HTTPAPI httpApi;
@@ -113,11 +114,11 @@ public class CovidDataResolver {
                 covidData.setCountry(WORLD);
                 covidData.setContinent(WORLD);
             }else if(isContinent){
-                covidData.setCountry(json.getString("continent"));
-                covidData.setContinent(json.getString("continent"));
+                covidData.setCountry(json.getString(CONTINENT));
+                covidData.setContinent(json.getString(CONTINENT));
             }else{
                 covidData.setCountry(json.getString("country"));
-                covidData.setContinent(json.getString("continent"));
+                covidData.setContinent(json.getString(CONTINENT));
             }
         }catch(JSONException e){
             log.error("Error -> Transforming json to CovidData object", e);

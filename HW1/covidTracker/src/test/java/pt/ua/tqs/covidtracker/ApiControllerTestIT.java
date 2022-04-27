@@ -153,6 +153,60 @@ class ApiControllerTestIT {
         .andExpect(jsonPath("$.country").isNotEmpty())
         .andExpect(jsonPath("$.continent").isNotEmpty())
         .andExpect(jsonPath("$.dayOfData").isNotEmpty());
+
+        mvc.perform(get("/api/get/continent")
+        .param("continent", "Europe")
+        .param("dayOfData", "Yesterday")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$.updated").isNotEmpty())
+        .andExpect(jsonPath("$.cases").isNotEmpty())
+        .andExpect(jsonPath("$.todayCases").isNotEmpty())
+        .andExpect(jsonPath("$.deaths").isNotEmpty())
+        .andExpect(jsonPath("$.todayDeaths").isNotEmpty())
+        .andExpect(jsonPath("$.recovered").isNotEmpty())
+        .andExpect(jsonPath("$.todayRecovered").isNotEmpty())
+        .andExpect(jsonPath("$.active").isNotEmpty())
+        .andExpect(jsonPath("$.critical").isNotEmpty())
+        .andExpect(jsonPath("$.casesPerOneMillion").isNotEmpty())
+        .andExpect(jsonPath("$.deathsPerOneMillion").isNotEmpty())
+        .andExpect(jsonPath("$.tests").isNotEmpty())
+        .andExpect(jsonPath("$.testsPerOneMillion").isNotEmpty())
+        .andExpect(jsonPath("$.population").isNotEmpty())
+        .andExpect(jsonPath("$.activePerOneMillion").isNotEmpty())
+        .andExpect(jsonPath("$.recoveredPerOneMillion").isNotEmpty())
+        .andExpect(jsonPath("$.criticalPerOneMillion").isNotEmpty())
+        .andExpect(jsonPath("$.country").isNotEmpty())
+        .andExpect(jsonPath("$.continent").isNotEmpty())
+        .andExpect(jsonPath("$.dayOfData").isNotEmpty());
+
+        mvc.perform(get("/api/get/continent")
+        .param("continent", "Europe")
+        .param("dayOfData", "Two Days Ago")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$.updated").isNotEmpty())
+        .andExpect(jsonPath("$.cases").isNotEmpty())
+        .andExpect(jsonPath("$.todayCases").isNotEmpty())
+        .andExpect(jsonPath("$.deaths").isNotEmpty())
+        .andExpect(jsonPath("$.todayDeaths").isNotEmpty())
+        .andExpect(jsonPath("$.recovered").isNotEmpty())
+        .andExpect(jsonPath("$.todayRecovered").isNotEmpty())
+        .andExpect(jsonPath("$.active").isNotEmpty())
+        .andExpect(jsonPath("$.critical").isNotEmpty())
+        .andExpect(jsonPath("$.casesPerOneMillion").isNotEmpty())
+        .andExpect(jsonPath("$.deathsPerOneMillion").isNotEmpty())
+        .andExpect(jsonPath("$.tests").isNotEmpty())
+        .andExpect(jsonPath("$.testsPerOneMillion").isNotEmpty())
+        .andExpect(jsonPath("$.population").isNotEmpty())
+        .andExpect(jsonPath("$.activePerOneMillion").isNotEmpty())
+        .andExpect(jsonPath("$.recoveredPerOneMillion").isNotEmpty())
+        .andExpect(jsonPath("$.criticalPerOneMillion").isNotEmpty())
+        .andExpect(jsonPath("$.country").isNotEmpty())
+        .andExpect(jsonPath("$.continent").isNotEmpty())
+        .andExpect(jsonPath("$.dayOfData").isNotEmpty());
     }
     @Test
     void testGetDataUsingCache() throws Exception{
@@ -200,7 +254,7 @@ class ApiControllerTestIT {
     }
 
     @Test
-    void testGetDataBadCountry() throws Exception{
+    void testGetCountryBadCountry() throws Exception{
         mvc.perform(get("/api/get/country")
         .param("country", "asdfgh")
         .param("dayOfData", "Today")
@@ -209,22 +263,70 @@ class ApiControllerTestIT {
     }
 
     @Test
-    void testGetDataNoParameters() throws Exception{
+    void testGetCountrytBadDayOfData() throws Exception{
+        mvc.perform(get("/api/get/continent")
+        .param("country", "Portugal")
+        .param("dayOfData", "asdfgh")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testGetCountryNoParameters() throws Exception{
         mvc.perform(get("/api/get/country")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isBadRequest());
     }
 
     @Test
-    void testGetDataOnlyCountry() throws Exception{
+    void testGetCountryOnlyCountry() throws Exception{
         mvc.perform(get("/api/get/country")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testGetCountryOnlyDayofData() throws Exception{
+        mvc.perform(get("/api/get/country")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testGetContinentBadContinent() throws Exception{
+        mvc.perform(get("/api/get/continent")
+        .param("continent", "asdfgh")
+        .param("dayOfData", "Today")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testGetContinentBadDayOfData() throws Exception{
+        mvc.perform(get("/api/get/continent")
+        .param("continent", "Europe")
+        .param("dayOfData", "asdfgh")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testGetContinentNoParameters() throws Exception{
+        mvc.perform(get("/api/get/continent")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testGetContinentOnlyContinent() throws Exception{
+        mvc.perform(get("/api/get/continent")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isBadRequest());
     }
 
     @Test
     void testGetDataOnlyDayofData() throws Exception{
-        mvc.perform(get("/api/get/country")
+        mvc.perform(get("/api/get/continent")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isBadRequest());
     }
