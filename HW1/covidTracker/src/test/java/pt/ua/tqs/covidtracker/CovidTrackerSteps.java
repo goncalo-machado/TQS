@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -53,13 +55,16 @@ public class CovidTrackerSteps {
         assertEquals(title, driver.getTitle());
     }
 
-    @And("there should be a card that has {string}")
-    public void assertSomeCardHas(String string){
-        String xpath = "//*[text()='" + string + "']";
+    @And("there should be a card with the title {string} and value {string}")
+    public void assertSomeCardHas(String title, String value){
+        String titleid = "key" + title;
+        String valueid = "value" + title;
         try{
-            driver.findElement(By.xpath(xpath));
+            driver.findElement(By.id(titleid));
+            WebElement element =  driver.findElement(By.id(valueid));
+            assertEquals(value, element.getText());
         }catch (NoSuchElementException e){
-            throw new AssertionError("\"" + string + "\" is not present in any card");
+            throw new AssertionError("\"" + title + "\" is not present in any card");
         }
     }
 }
