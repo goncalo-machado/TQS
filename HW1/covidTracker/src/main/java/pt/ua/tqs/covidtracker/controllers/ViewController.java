@@ -50,7 +50,7 @@ public class ViewController {
 	public String countryStats(@ModelAttribute("countryDayOfData") CountryDayofData countryDayofData, Model model) throws BadRequestException {
 		log.info("-- Start -- Getting data for contryStatsPage");
 
-        CovidData data = service.getDataByCountryAndDayOfData(countryDayofData.getCountry(), countryDayofData.getDayOfData());
+        CovidData data = service.getDataByPlaceAndDayOfData(countryDayofData.getCountry(), countryDayofData.getDayOfData(), false);
 
         if (data == null){
             throw new BadRequestException("Bad request -> country :" + countryDayofData.getCountry() + " day: " + countryDayofData.getDayOfData());

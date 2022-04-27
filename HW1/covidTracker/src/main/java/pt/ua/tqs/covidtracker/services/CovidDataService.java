@@ -19,13 +19,13 @@ public class CovidDataService {
     @Autowired
     Cache cache;
 
-    public CovidData getDataByCountryAndDayOfData(String country, int day){
+    public CovidData getDataByPlaceAndDayOfData(String country, int day , boolean isContinent){
         log.info("Checking data from cache");
 
         CovidData data = cache.getData(country, day);
         if(data == null){
             log.info("Data not in cache, getting from external API");
-            data = resolver.getCountryData(country, day);
+            data = resolver.getData(country, day, isContinent);
             if(data == null){
                 log.error("Error getting data from external API -> Returning null");
                 return null;

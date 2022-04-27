@@ -42,10 +42,35 @@ public class APIController {
             throw new BadDayOfDataException("Invalid Day -> " + day);
         }
 
-        CovidData data = service.getDataByCountryAndDayOfData(country, day);
+        CovidData data = service.getDataByPlaceAndDayOfData(country, day, false);
 
         if (data == null){
             throw new BadRequestException("Bad request -> country :" + country + " day: " + day);
+        }
+        
+        return new ResponseEntity<>(data, HttpStatus.OK);
+    }
+
+    @GetMapping("/get/continent")
+    public ResponseEntity<CovidData> getDataByContinentAndOrDayOfData(@RequestParam(value = "continent", required = true) String continent, @RequestParam(value = "dayOfData", defaultValue = "Today") String dayOfData) throws BadRequestException, BadDayOfDataException{
+        log.info("Get Request: Data by continent and or dayOfData");
+        int day = -1;
+        if(dayOfData.equalsIgnoreCase("TODAY")){
+            day = 0;
+        } else if(dayOfData.equalsIgnoreCase("YESTERDAY")){
+            day = 1;
+        } else if(dayOfData.equalsIgnoreCase("DAY BEFORE YESTERDAY")){
+            day = 2;
+        }
+
+        if (day == -1){
+            throw new BadDayOfDataException("Invalid Day -> " + day);
+        }
+
+        CovidData data = service.getDataByPlaceAndDayOfData(continent, day, true);
+
+        if (data == null){
+            throw new BadRequestException("Bad request -> continent :" + continent + " day: " + day);
         }
         
         return new ResponseEntity<>(data, HttpStatus.OK);

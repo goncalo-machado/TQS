@@ -39,14 +39,14 @@ class ServiceTest {
 
 
         Mockito.when(cache.getData(data1.getCountry(), data1.getDayOfData())).thenReturn(data1);
-        Mockito.when(resolver.getCountryData(data2.getCountry(), data2.getDayOfData())).thenReturn(data2);
+        Mockito.when(resolver.getData(data2.getCountry(), data2.getDayOfData(), false)).thenReturn(data2);
     }
 
     @Test
     void whenDataInCache_ReturnsDataFromCache(){
         String country = "Portugal";
         int dayOfData = 0;
-        CovidData data = service.getDataByCountryAndDayOfData(country, dayOfData);
+        CovidData data = service.getDataByPlaceAndDayOfData(country, dayOfData, false);
         assertEquals(country, data.getCountry());
         assertEquals(dayOfData, data.getDayOfData());
     }
@@ -55,7 +55,7 @@ class ServiceTest {
     void whenDataNotInCache_ButDataInResolver_ReturnDataFromResolver(){
         String country = "Portugal";
         int dayOfData = 1;
-        CovidData data = service.getDataByCountryAndDayOfData(country, dayOfData);
+        CovidData data = service.getDataByPlaceAndDayOfData(country, dayOfData, false);
         assertEquals(country, data.getCountry());
         assertEquals(dayOfData,data.getDayOfData());
     }
@@ -64,7 +64,7 @@ class ServiceTest {
     void whenDataNotInCacheAndNotInResolverThrowJsonException(){
         String country = "Portugal";
         int dayOfData = 2;
-        assertEquals(null, service.getDataByCountryAndDayOfData(country, dayOfData));
+        assertEquals(null, service.getDataByPlaceAndDayOfData(country, dayOfData, false));
     }
 
 }

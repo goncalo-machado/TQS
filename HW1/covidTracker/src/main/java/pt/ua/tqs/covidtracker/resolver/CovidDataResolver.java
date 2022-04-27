@@ -22,12 +22,12 @@ public class CovidDataResolver {
     HTTPAPI httpApi;
 
     //date = 0 -> today, date = 1 -> 1 day ago, date = 2 -> 2 days ago
-    public CovidData getCountryData(String country, int date){ 
+    public CovidData getData(String country, int date, boolean isContinent){ 
         String response = null;
         log.info("----Start -> Getting all data from external API----");
         
         try {
-            response = this.httpApi.httpGet(urlBuilder(country, date));
+            response = this.httpApi.httpGet(urlBuilder(country, date, isContinent));
         } catch (BadUrlException e1) {
             log.error("BadUrlException", e1);
             return null;
@@ -41,24 +41,20 @@ public class CovidDataResolver {
         }
 
         if(json.has("message")){
-            log.error("Error in get request to external API -> Returnin null");
+            log.error("Error in get request to external API -> Returning null");
             return null;
         }
         log.info("---- Successful get request to external API");
 
-        log.info("RESPONSE ----------- {}", response);
-
         log.info("---- Making CovidData objects out of data");
-        CovidData data = jsonToData(response, country.equalsIgnoreCase(WORLD));
+        CovidData data = jsonToData(response, country.equalsIgnoreCase(WORLD), isContinent);
         data.setDayOfData(date);
-
-        log.info("DATA ----------- {}", data);
 
         log.info("----End -> Getting all data from external API----");
         return data;
     }
 
-    public String urlBuilder(String country, int date){
+    public String urlBuilder(String country, int date, boolean isContinent){
         
         StringBuilder url = new StringBuilder();
         if(country.equalsIgnoreCase(WORLD)){
@@ -71,7 +67,11 @@ public class CovidDataResolver {
             }
 
         }else{
-            url = url.append("https://disease.sh/v3/covid-19/countries/").append(country).append("?");
+            if (isContinent){
+                url = url.append("https://disease.sh/v3/covid-19/continents/").append(country).append("?");
+            }else{
+                url = url.append("https://disease.sh/v3/covid-19/countries/").append(country).append("?");
+            }
             if (date == 1){
                 url = url.append("yesterday=true&");
             } else if (date == 2){
@@ -82,7 +82,7 @@ public class CovidDataResolver {
         return url.toString();
     }
 
-    public CovidData jsonToData(String data, boolean worldData){
+    public CovidData jsonToData(String data, boolean worldData, boolean isContinent){
         CovidData covidData = new CovidData();
         try{
             JSONObject json = new JSONObject(data);
@@ -101,15 +101,20 @@ public class CovidDataResolver {
             covidData.setTests(json.getInt("tests"));
             covidData.setTestsPerOneMillion(json.getLong("testsPerOneMillion"));
             covidData.setPopulation(json.getInt("population"));
-            covidData.setOneCasePerPeople(json.getLong("oneCasePerPeople"));
-            covidData.setOneDeathPerPeople(json.getLong("oneDeathPerPeople"));
-            covidData.setOneTestPerPeople(json.getLong("oneTestPerPeople"));
+            if(!isContinent){
+                covidData.setOneCasePerPeople(json.getLong("oneCasePerPeople"));
+                covidData.setOneDeathPerPeople(json.getLong("oneDeathPerPeople"));
+                covidData.setOneTestPerPeople(json.getLong("oneTestPerPeople"));
+            }
             covidData.setActivePerOneMillion(json.getLong("activePerOneMillion"));
             covidData.setRecoveredPerOneMillion(json.getLong("recoveredPerOneMillion"));
             covidData.setCriticalPerOneMillion(json.getLong("criticalPerOneMillion"));
             if(worldData){
                 covidData.setCountry(WORLD);
                 covidData.setContinent(WORLD);
+            }else if(isContinent){
+                covidData.setCountry(json.getString("continent"));
+                covidData.setContinent(json.getString("continent"));
             }else{
                 covidData.setCountry(json.getString("country"));
                 covidData.setContinent(json.getString("continent"));
