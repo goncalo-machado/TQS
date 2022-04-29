@@ -1,39 +1,47 @@
 package pt.ua.tqs.covidtracker;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.http.MediaType;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+
+import pt.ua.tqs.covidtracker.controllers.APIController;
 import pt.ua.tqs.covidtracker.models.CovidData;
-import pt.ua.tqs.covidtracker.repository.CovidDataRepository;
+import pt.ua.tqs.covidtracker.services.CovidDataService;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = CovidTrackerApplication.class)
-@AutoConfigureMockMvc
-@AutoConfigureTestDatabase
-class ApiControllerTestIT {
+@WebMvcTest(APIController.class)
+class ApiControllerTest {
     
     @Autowired
     private MockMvc mvc;
 
-    @Autowired
-    CovidDataRepository covidRepo;
+    @MockBean
+    private CovidDataService service;
 
-    @AfterEach
-    public void resetDb() {
-        covidRepo.deleteAll();
-    }
+    private static final String WORLD = "World";
+    private static final String EUROPE = "Europe";
+    private static final String PORTUGAL = "Portugal";
 
     @Test
     void testGetCountryDataUsingExternalAPI() throws Exception{
+
+        CovidData data1 = buildCovidDataObject(PORTUGAL, EUROPE, 0);
+        CovidData data2 = buildCovidDataObject(PORTUGAL, EUROPE, 1);
+        CovidData data3 = buildCovidDataObject(PORTUGAL, EUROPE, 2);
+
+        Mockito.when(service.getDataByPlaceAndDayOfData(data1.getCountry(), data1.getDayOfData(), false)).thenReturn(data1);
+        Mockito.when(service.getDataByPlaceAndDayOfData(data2.getCountry(), data2.getDayOfData(), false)).thenReturn(data2);
+        Mockito.when(service.getDataByPlaceAndDayOfData(data3.getCountry(), data3.getDayOfData(), false)).thenReturn(data3);
+
         mvc.perform(get("/api/get/country")
         .param("country", "Portugal")
         .param("dayOfData", "Today")
@@ -127,6 +135,15 @@ class ApiControllerTestIT {
 
     @Test
     void testGetContinentData() throws Exception{
+
+        CovidData data1 = buildCovidDataObject(EUROPE, EUROPE, 0);
+        CovidData data2 = buildCovidDataObject(EUROPE, EUROPE, 1);
+        CovidData data3 = buildCovidDataObject(EUROPE, EUROPE, 2);
+
+        Mockito.when(service.getDataByPlaceAndDayOfData(data1.getCountry(), data1.getDayOfData(), true)).thenReturn(data1);
+        Mockito.when(service.getDataByPlaceAndDayOfData(data2.getCountry(), data2.getDayOfData(), true)).thenReturn(data2);
+        Mockito.when(service.getDataByPlaceAndDayOfData(data3.getCountry(), data3.getDayOfData(), true)).thenReturn(data3);
+
         mvc.perform(get("/api/get/continent")
         .param("continent", "Europe")
         .param("dayOfData", "Today")
@@ -212,6 +229,15 @@ class ApiControllerTestIT {
 
     @Test
     void testGetWorldDataUsingExternalAPI() throws Exception{
+
+        CovidData data1 = buildCovidDataObject(WORLD, WORLD, 0);
+        CovidData data2 = buildCovidDataObject(WORLD, WORLD, 1);
+        CovidData data3 = buildCovidDataObject(WORLD, WORLD, 2);
+
+        Mockito.when(service.getDataByPlaceAndDayOfData(data1.getCountry(), data1.getDayOfData(), false)).thenReturn(data1);
+        Mockito.when(service.getDataByPlaceAndDayOfData(data2.getCountry(), data2.getDayOfData(), false)).thenReturn(data2);
+        Mockito.when(service.getDataByPlaceAndDayOfData(data3.getCountry(), data3.getDayOfData(), false)).thenReturn(data3);
+
         mvc.perform(get("/api/get/world")
         .param("dayOfData", "Today")
         .contentType(MediaType.APPLICATION_JSON))
@@ -301,8 +327,11 @@ class ApiControllerTestIT {
     }
     @Test
     void testGetDataUsingCache() throws Exception{
-        CovidData data = buildCovidDataObject();
         
+        CovidData data = buildCovidDataObject(PORTUGAL, EUROPE, 0);
+
+        Mockito.when(service.getDataByPlaceAndDayOfData(data.getCountry(), data.getDayOfData(), false)).thenReturn(data);
+
         mvc.perform(get("/api/get/country")
         .param("country", "Portugal")
         .param("dayOfData", "Today")
@@ -336,15 +365,93 @@ class ApiControllerTestIT {
     }
 
     @Test
+    void testGetCountryBadDayofData() throws Exception{
+        mvc.perform(get("/api/get/country")
+        .param("country", "Portugal")
+        .param("dayOfData", "asdasda")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testGetCountryBadCountry() throws Exception{
+        mvc.perform(get("/api/get/country")
+        .param("country", "asdfgh")
+        .param("dayOfData", "Today")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testGetCountrytBadDayOfData() throws Exception{
+        mvc.perform(get("/api/get/continent")
+        .param("country", "Portugal")
+        .param("dayOfData", "asdfgh")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testGetCountryNoParameters() throws Exception{
+        mvc.perform(get("/api/get/country")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void testGetCountryOnlyCountry() throws Exception{
+
+        CovidData data = buildCovidDataObject(PORTUGAL, EUROPE, 0);
+
+        Mockito.when(service.getDataByPlaceAndDayOfData(data.getCountry(), data.getDayOfData(), false)).thenReturn(data);
+
         mvc.perform(get("/api/get/country")
         .param("country", "Portugal")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.dayOfData").value(0));
     }
+
+    @Test
+    void testGetCountryOnlyDayofData() throws Exception{
+        mvc.perform(get("/api/get/country")
+        .param("dayOfData", "Today")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testGetContinentBadContinent() throws Exception{
+        mvc.perform(get("/api/get/continent")
+        .param("continent", "asdfgh")
+        .param("dayOfData", "Today")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testGetContinentBadDayOfData() throws Exception{
+        mvc.perform(get("/api/get/continent")
+        .param("continent", "Europe")
+        .param("dayOfData", "asdfgh")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testGetContinentNoParameters() throws Exception{
+        mvc.perform(get("/api/get/continent")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+    }
+
     @Test
     void testGetContinentOnlyContinent() throws Exception{
+
+        CovidData data = buildCovidDataObject(EUROPE, EUROPE, 0);
+
+        Mockito.when(service.getDataByPlaceAndDayOfData(data.getCountry(), data.getDayOfData(), true)).thenReturn(data);
+
         mvc.perform(get("/api/get/continent")
         .param("continent", "Europe")
         .contentType(MediaType.APPLICATION_JSON))
@@ -353,7 +460,27 @@ class ApiControllerTestIT {
     }
 
     @Test
+    void testGetContinentOnlyDayofData() throws Exception{
+        mvc.perform(get("/api/get/continent")
+        .param("dayOfData", "Today")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testGetWorldBadDayOfData() throws Exception{
+        mvc.perform(get("/api/get/world")
+        .param("dayOfData", "asdfgh")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void testGetWorldNoParameters() throws Exception{
+        CovidData data = buildCovidDataObject(WORLD, WORLD, 0);
+
+        Mockito.when(service.getDataByPlaceAndDayOfData(data.getCountry(), data.getDayOfData(), false)).thenReturn(data);
+
         mvc.perform(get("/api/get/world")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
@@ -374,7 +501,7 @@ class ApiControllerTestIT {
         .andExpect(jsonPath("deleteRequests").isNotEmpty());
     }
     
-    CovidData buildCovidDataObject(){
+    CovidData buildCovidDataObject(String country, String continent, int dayOfData){
         
         CovidData covidData = new CovidData();
         covidData.setUpdated(1234567890);
@@ -397,11 +524,10 @@ class ApiControllerTestIT {
         covidData.setActivePerOneMillion(3);
         covidData.setRecoveredPerOneMillion(1);
         covidData.setCriticalPerOneMillion(0);
-        covidData.setCountry("Portugal");
-        covidData.setContinent("Europe");
-        covidData.setDayOfData(0);
-
-        covidRepo.saveAndFlush(covidData);
+        covidData.setCountry(country);
+        covidData.setContinent(continent);
+        covidData.setDayOfData(dayOfData);
         return covidData;
     }
 }
+
