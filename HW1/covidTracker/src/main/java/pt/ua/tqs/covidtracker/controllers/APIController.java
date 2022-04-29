@@ -21,7 +21,10 @@ import org.slf4j.LoggerFactory;
 @RestController
 @RequestMapping("/api")
 public class APIController {
+
     private static final Logger log = LoggerFactory.getLogger(APIController.class);
+
+    private static final String INVALIDDAY = "Invalid Day -> ";
 
     @Autowired
     private CovidDataService service;
@@ -32,7 +35,7 @@ public class APIController {
         int day = stringDayToIntDay(dayOfData);
 
         if (day == -1){
-            throw new BadDayOfDataException("Invalid Day -> " + day);
+            throw new BadDayOfDataException(INVALIDDAY + day);
         }
 
         CovidData data = service.getDataByPlaceAndDayOfData(country, day, false);
@@ -50,7 +53,7 @@ public class APIController {
         int day = stringDayToIntDay(dayOfData);
 
         if (day == -1){
-            throw new BadDayOfDataException("Invalid Day -> " + day);
+            throw new BadDayOfDataException(INVALIDDAY + day);
         }
 
         CovidData data = service.getDataByPlaceAndDayOfData("World", day, false);
@@ -68,7 +71,7 @@ public class APIController {
         int dayofdata = stringDayToIntDay(dayOfData);
 
         if (dayofdata == -1){
-            throw new BadDayOfDataException("Invalid Day -> " + dayofdata);
+            throw new BadDayOfDataException(INVALIDDAY + dayofdata);
         }
 
         CovidData data = service.getDataByPlaceAndDayOfData(continent, dayofdata, true);
